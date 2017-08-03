@@ -63,7 +63,7 @@ class Quote implements \JsonSerializable {
 	public function __construct(?int $newQuoteId, string $newQuote, string $newQuoteAuthor, string $newQuotePoster, int $newQuoteRating) {
 		try {
 			$this->setQuoteId($newQuoteId);
-			$this->setquote($newQuote);
+			$this->setQuote($newQuote);
 			$this->setQuoteAuthor($newQuoteAuthor);
 			$this->setQuotePoster($newQuotePoster);
 			$this->setQuoteRating($newQuoteRating);
@@ -110,7 +110,7 @@ class Quote implements \JsonSerializable {
 	 * @return string $quote the actual quote that was posted
 	 */
 	public function getQuote(): string {
-		return $this->quote;
+		return ($this->quote);
 	}
 
 	/**
@@ -127,7 +127,7 @@ class Quote implements \JsonSerializable {
 		if(empty($newQuote) === true) {
 			throw (new \InvalidArgumentException("quote is empty or insecure"));
 		}
-		if(strlen($newQuote) < 256) {
+		if(strlen($newQuote) > 256) {
 			throw(new \RangeException("quote is too long"));
 		}
 		$this->quote = $newQuote;
@@ -139,7 +139,7 @@ class Quote implements \JsonSerializable {
 	 *
 	 */
 	public function getQuoteAuthor(): string {
-		return $this->quoteAuthor;
+		return ($this->quoteAuthor);
 	}
 
 	/**
@@ -166,7 +166,7 @@ class Quote implements \JsonSerializable {
 	 * @return string $quotePoster the person who posted the quote
 	 */
 	public function getQuotePoster(): string {
-		return $this->quotePoster;
+		return ($this->quotePoster);
 	}
 
 	/**
@@ -191,7 +191,7 @@ class Quote implements \JsonSerializable {
 	 * @return int $quoteRank the rank of the quote.
 	 */
 	public function getQuoteRating() : int  {
-		return $this->quoteRating;
+		return ($this->quoteRating);
 	}
 
 	/**
@@ -239,7 +239,6 @@ class Quote implements \JsonSerializable {
 		if($this->quoteId === null) {
 			throw(new \PDOException("cannot update a non existing quote"));
 		}
-
 		//create a query template
 		$query = "UPDATE quote SET quoteId = :quoteId, quote = :quote, quoteAuthor = :quoteAuthor, quotePoster = :quotePoster, quoteRating = :quoteRating";
 		$statement = $pdo->prepare($query);
@@ -365,7 +364,7 @@ class Quote implements \JsonSerializable {
 		//build an array of the quote objects that meet search criteria
 		$quotes = new \SplFixedArray($statement->rowCount());
 		$statement->setFetchMode(\PDO::FETCH_ASSOC);
-		while($row = $statement->fetch() !== false) {
+		while(($row = $statement->fetch()) !== false) {
 			try {
 				$quote = new Quote($row["quoteId"], $row["quote"], $row["quoteAuthor"], $row["quotePoster"], $row["quoteRating"]);
 				$quotes[$quotes->key()] = $quote;

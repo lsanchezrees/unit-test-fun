@@ -85,7 +85,7 @@ class QuoteTest extends QuoteTestSetup {
 		$numRows = $this->getConnection()->getRowCount("quote");
 
 		//create the quote object
-		$quote = new Quote(null, $this->VALID_GREAT_QUOTE, $this->VALID_QUOTE_POSTER, $this->VALID_QUOTE_AUTHOR,  $this->VALID_QUOTE_RATING);
+		$quote = new Quote(null, $this->VALID_GREAT_QUOTE, $this->VALID_QUOTE_AUTHOR,  $this->VALID_QUOTE_POSTER,  $this->VALID_QUOTE_RATING);
 		//insert the quote object
 		$quote->insert($this->getPDO());
 
@@ -117,7 +117,7 @@ class QuoteTest extends QuoteTestSetup {
 		$numRows = $this->getConnection()->getRowCount("quote");
 
 		//create the quote object then insert it
-		$quote = new Quote(null, $this->VALID_GREAT_QUOTE, $this->VALID_QUOTE_POSTER, $this->VALID_QUOTE_AUTHOR, $this->VALID_QUOTE_RATING);
+		$quote = new Quote(null, $this->VALID_GREAT_QUOTE, $this->VALID_QUOTE_AUTHOR, $this-> VALID_QUOTE_POSTER, $this->VALID_QUOTE_RATING);
 		$quote->insert($this->getPDO());
 
 		//edit the quote object then insert the object back into the database
@@ -208,6 +208,7 @@ class QuoteTest extends QuoteTestSetup {
 		//grab the quote from the database.
 		$pdoQuote = Quote::getQuoteByAuthor($this->getPDO(), $quote->getQuoteAuthor());
 		$this->assertEquals($numRows + 1, $this->getConnection()->getRowCount("quote"));
+		$pdoQuote = $pdoQuote[0];
 
 		$this->assertEquals($pdoQuote->getQuoteId(), $quote->getQuoteId());
 		$this->assertEquals($pdoQuote->getQuote(), $quote->getQuote());
